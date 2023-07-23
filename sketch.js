@@ -81,10 +81,10 @@ function draw() {
   
   background("grey");
   
-  text("score", 1, 1, 80, 80);
-  text(score, 4, 10, 70, 80);
-  text("Lives", 370, 1, 40, 40);
-  text(lives, 385, 10, 70, 80);
+  text("score", 0, 180);
+  text(score, 40, 180);
+  text("Lives",0,200);
+  text(lives, 40,200);
   circle(ball_x, ball_y, ball_radius)
   rect(paddle_x, paddle_y, paddle_width, paddle_height)
   
@@ -94,6 +94,7 @@ function draw() {
   if (score == (brickRows * brickColumns)) {
     alert("Wow, you won the game");
     clear()
+    text("Great",200,200);
     return;
   }
   
@@ -113,6 +114,7 @@ function draw() {
       lives = 0;
       alert("You lost the game");
       clear()
+      text("OHH!",200,200);
       return;
     }
     
