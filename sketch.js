@@ -5,6 +5,7 @@ var brickRows = 4, brickColumns = 4, brickWidth = 75, brickHeight = 20, brickPad
 
 var bricks = [];
 var score = 0;
+var lives = 3;
 
 function setup() {
   createCanvas(400, 400);
@@ -77,16 +78,24 @@ function create_grid() {
 }
 
 function draw() {
-  clear()
+  
   background("grey");
   
-  text("score", 1, 1, 40, 40);
+  text("score", 1, 1, 80, 80);
   text(score, 4, 10, 70, 80);
+  text("Lives", 370, 1, 40, 40);
+  text(lives, 385, 10, 70, 80);
   circle(ball_x, ball_y, ball_radius)
   rect(paddle_x, paddle_y, paddle_width, paddle_height)
   
   show_grid();
   ball_x = ball_x - ball_dx;
+  
+  if (score == (brickRows * brickColumns)) {
+    alert("Wow, you won the game");
+    clear()
+    return;
+  }
   
   if (ball_x >= width - ball_radius) {
     ball_dx = -ball_dx;
@@ -99,10 +108,20 @@ function draw() {
   ball_y = ball_y - ball_dy;
   
   if (ball_y >= height - ball_radius) {
-    // ball_radius = 0.0;
-    // ball_dx = 0;
-    // ball_dy = 0;
     
+    if (lives == 1) {
+      lives = 0;
+      alert("You lost the game");
+      clear()
+      return;
+    }
+    
+    if ((lives - 1) > 0) {
+      lives = lives - 1;
+      ball_x = 200;
+      ball_y = 200;
+      ball_dy = 3;
+    }
   }
   
   if (ball_y <= ball_radius) {
@@ -115,12 +134,6 @@ function draw() {
    if (keyIsDown(RIGHT_ARROW)) {
      paddle_x = paddle_x + paddle_dx;
   }
-  
-  // if ((ball_x - ball_radius >= paddle_x) && (ball_x + ball_radius <= paddle_x + paddle_width)) {
-  //   if (ball_y + ball_radius >= paddle_y) {
-  //     ball_dy = -ball_dy;
-  //   }
-  // }
   
   if ((paddle_x <= (ball_x + ball_radius)) && ((paddle_x + paddle_width) >= (ball_x - ball_radius))) {
     if ((paddle_y <= (ball_y + ball_radius)) && ((paddle_y + paddle_height) >= (ball_y - ball_radius)))
